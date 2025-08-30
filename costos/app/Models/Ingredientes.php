@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Recetas;
+use App\Models\UnidadMedida; // Asegúrate de que este sea el namespace correcto
 
 class Ingredientes extends Model
 {
@@ -16,8 +17,13 @@ class Ingredientes extends Model
         'fecha_actualizacion' => 'datetime',
     ];
  
-    protected $fillable = ['nombre', 'unidad_medida', 'costo_unitario', 'fecha_actualizacion'];
+    protected $fillable = ['nombre', 'unidad_medida_id', 'costo_unitario',  'densidad', 'fecha_actualizacion'];
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function unidadMedida()
+    {
+        return $this->belongsTo(UnidadMedida::class, 'unidad_medida_id');
+    }
 
     public function recetas()
     {
@@ -25,5 +31,6 @@ class Ingredientes extends Model
                     ->withPivot('cantidad')
                     ->withTimestamps();
     }
+
 
 }

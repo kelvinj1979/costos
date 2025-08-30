@@ -43,6 +43,7 @@
 												<th>ID</th>
 												<th>Nombre</th>
 												<th>Unidad de Medida</th>
+												<th>Densidad</th>
 												<th>Costo Unitario</th>
 												<th style="width: 120px;">Actions</th>
 											</tr>
@@ -52,11 +53,17 @@
 												<tr>
 													<td>{{ $element->id }}</td>
 													<td>{{ $element->nombre }}</td>
-													<td>{{ $element->unidad_medida }}</td>
+													<td>{{ $element->unidadMedida->abreviatura }}</td>
+													<td>{{ $element->densidad ?? 'N/A' }}</td\>
 													<td>${{ number_format($element->costo_unitario, 4) }}</td>
-													<td>
+													<td>														
 														<a href="#" class="btn btn-primary btn-sm edit-ingredientes-btn"
-															data-id="{{ $element->id }}">
+															data-id="{{ $element->id }}"
+															data-nombre="{{ $element->nombre }}"
+															data-unidad_medida_id="{{ $element->unidad_medida_id }}"
+															data-costo_unitario="{{ $element->costo_unitario }}"
+															data-densidad="{{ $element->densidad }}"
+															data-unidad_id="{{ $element->unidad_medida_id }}">
 															<i class="bi bi-pencil"></i>
 														</a>
 														<a href="#" class="btn btn-danger btn-sm delete-ingredientes-btn"
@@ -101,18 +108,17 @@
 									<input type="text" class="form-control" id="nombre" name="nombre" required>
 								</div>
 								<div class="mb-3">
-									<label for="unidad_medida" class="form-label">Unidad de Medida</label>
-									<select class="form-control" id="unidad_medida" name="unidad_medida" required>
+									<label for="unidad_medida_id" class="form-label">Unidad de Medida</label>
+									<select class="form-control" id="unidad_medida_id" name="unidad_medida_id" required>
 										<option value="">Seleccione una unidad</option>
-										<option value="kg">Kilogramo (kg)</option>
-										<option value="gr">Gramo (gr)</option>
-										<option value="lb">Libra (lb)</option>
-										<option value="oz">Onza (oz)</option>
-										<option value="lt">Litro (lt)</option>
-										<option value="ml">Mililitro (ml)</option>
-										<option value="gl">Galon (gl)</option>
-										<option value="ud">Unidad (ud)</option>
+										@foreach($unidadesMedida as $unidad)
+											<option value="{{ $unidad->id }}">{{ $unidad->nombre }} ({{ $unidad->abreviatura }})</option>
+										@endforeach
 									</select>
+								</div>
+								<div class="mb-3">
+									<label for="densidad" class="form-label">Densidad (g/ml)</label>
+									<input type="number" class="form-control" id="densidad" name="densidad" step="0.0001" placeholder="Solo si aplica">
 								</div>
 								<div class="mb-3">
 									<label for="costo_unitario" class="form-label">Costo Unitario</label>
@@ -148,19 +154,18 @@
 									<input type="text" class="form-control" id="edit_nombre" name="nombre" required>
 								</div>
 								<div class="mb-3">
-									<label for="edit_unidad_medida" class="form-label">Unidad de Medida</label>
-									<select class="form-control" id="edit_unidad_medida" name="unidad_medida" required>
+									<label for="edit_unidad_medida_id" class="form-label">Unidad de Medida</label>
+									<select class="form-control" id="edit_unidad_medida_id" name="unidad_medida_id" required>
 										<option value="">Seleccione una unidad</option>
-										<option value="kg">Kilogramo (kg)</option>
-										<option value="gr">Gramo (gr)</option>
-										<option value="lb">Libra (lb)</option>
-										<option value="oz">Onza (oz)</option>
-										<option value="lt">Litro (lt)</option>
-										<option value="ml">Mililitro (ml)</option>										
-										<option value="gl">Galon (gl)</option>
-										<option value="ud">Unidad (ud)</option>
+										@foreach($unidadesMedida as $unidad)
+											<option value="{{ $unidad->id }}">{{ $unidad->nombre }} ({{ $unidad->abreviatura }})</option>
+										@endforeach
 									</select>
 								</div>
+								<div class="mb-3">
+									<label for="edit_densidad" class="form-label">Densidad (g/ml)</label>
+									<input type="number" class="form-control" id="edit_densidad" name="densidad" step="0.0001" placeholder="Solo si aplica">
+								</div>									
 								<div class="mb-3">
 									<label for="edit_costo_unitario" class="form-label">Costo Unitario</label>
 									<input type="number" class="form-control" id="edit_costo_unitario" name="costo_unitario"
@@ -177,29 +182,30 @@
 			</div>
 			<!--end::Edit Modal-->
 			<!-- Delete Confirmation Modal -->
-			<div class="modal fade" id="deleteIngredienteModal" tabindex="-1" aria-labelledby="deleteIngredienteModalLabel"
-				aria-hidden="true">
+			<div class="modal fade" id="deleteIngredienteModal" tabindex="-1" aria-labelledby="deleteIngredienteModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="deleteIngredienteModalLabel">Confirmar Eliminación</h5>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
+						<div class="modal-body">
+							<p>¿Estás seguro de que deseas eliminar este ingrediente?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-danger" id="confirmDeleteBtn">Eliminar</button>
+						</div>
 						<form id="deleteIngredienteForm" method="POST" style="display:none;">
 							@csrf
-							@method('DELETE')
-							<div class="modal-body">
-								<p>¿Estás seguro de que deseas eliminar este ingrediente?</p>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-								<button type="button" class="btn btn-danger" id="confirmDeleteBtn">Eliminar</button>
-							</div>
+							@method('DELETE')						
 						</form>
 					</div>
 				</div>	
 			</div>
 			<!--end::Delete Confirmation Modal-->
+			 
+        </div>
 
 		</main>
 	@if (Session::has('no-validated'))

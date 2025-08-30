@@ -88,24 +88,33 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Mostrar modal de editar ingrediente
+    // Mostrar modal de editar ingredientes
     document.querySelectorAll('.edit-ingredientes-btn').forEach(btn => {
-        btn.addEventListener('click', function (e) {
-            e.preventDefault();
-            const id = btn.dataset.id;
-            // Usa la ruta base correcta
-            document.getElementById('editIngredienteForm').action = baseUrl + '/ingredientes/' + id;
-            const row = btn.closest('tr');
-            document.getElementById('edit_id').value = btn.dataset.id;
-            document.getElementById('edit_nombre').value = row.children[1].textContent.trim();
-            document.getElementById('edit_unidad_medida').value = row.children[2].textContent.trim();
-            document.getElementById('edit_costo_unitario').value = row.children[3].textContent.replace('$', '').trim();
+    btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        const id = btn.dataset.id;
+        const unidadId = btn.dataset.unidad_id;
 
-            document.getElementById('editIngredienteForm').action = window.baseUrl + '/ingredientes/' + id;
-            const modal = new bootstrap.Modal(document.getElementById('editIngredienteModal'));
-            modal.show();
-        });
+        document.getElementById('editIngredienteForm').action = baseUrl + '/ingredientes/' + id;
+        document.getElementById('edit_id').value = id;
+
+        const row = btn.closest('tr');
+        document.getElementById('edit_nombre').value = row.children[1].textContent.trim();
+       // document.getElementById('edit_unidad_medida_id').value = unidadId; // 👈 aquí seleccionamos el option correcto
+        // 👇 aquí seleccionamos la opción correcta del select
+        const selectUnidad = document.getElementById('edit_unidad_medida_id');
+        if (selectUnidad) {
+            selectUnidad.value = unidadId;
+        }
+        document.getElementById('edit_densidad').value = row.children[3].textContent.trim();
+        document.getElementById('edit_costo_unitario').value = row.children[4].textContent.replace('$', '').trim();
+        
+
+        const modal = new bootstrap.Modal(document.getElementById('editIngredienteModal'));
+        modal.show();
     });
+});
+
 
     // Mostrar modal de editar Materiales
     document.querySelectorAll('.edit-materiales-btn').forEach(btn => { 
