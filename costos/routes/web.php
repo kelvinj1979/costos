@@ -11,6 +11,8 @@ use App\Http\Controllers\MaterialesController;
 use App\Http\Controllers\MdobraController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UnidadMedidaController;
+use App\Http\Controllers\ConversionUnidadController;
 
 // Cambia esta línea:
 // Route::view('/', 'pages.dashboard')->name('dashboard');
@@ -37,6 +39,8 @@ Route::resources([
     'mdobra' => MdobraController::class,
     'usuarios' => UsuarioController::class,
     'crear_recetas' => RecetasController::class,
+    'unidad_medida' => UnidadMedidaController::class,
+    'conversion_unidad' => ConversionUnidadController::class,
 ]);
 
 Auth::routes();

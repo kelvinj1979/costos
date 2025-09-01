@@ -1,7 +1,7 @@
 <body class="login-page bg-body-secondary app-loaded">
     <div class="login-box">
         <div class="login-logo">
-            <a href="../index2.html"><b>Portfolio</b>CMS</a>
+            <a href="../index2.html"><b>Sistema de Costos</b>CMS</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">

@@ -207,7 +207,8 @@
 			 
         </div>
 
-		</main>
+	</main>
+	
 	@if (Session::has('no-validated'))
 		<script>
 			notie.alert({

@@ -88,6 +88,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Mostrar modal de agregar Unidad de Medida
+    document.querySelectorAll('.btn-add-unidades').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const modal = new bootstrap.Modal(document.getElementById('addUnidadesModal'));
+            modal.show();
+        });
+    });
+
     // Mostrar modal de editar ingredientes
     document.querySelectorAll('.edit-ingredientes-btn').forEach(btn => {
     btn.addEventListener('click', function (e) {
@@ -155,6 +164,60 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+   // Mostrar modal de editar Unidad de Medida
+  /* document.querySelectorAll('.edit-unidades-btn').forEach(btn => {  
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const id = btn.dataset.id;
+            // Usa la ruta base correcta
+            document.getElementById('editUnidadesForm').action = baseUrl + '/unidades_medida/' + id;
+            const row = btn.closest('tr');
+            document.getElementById('edit_unidad_id').value = btn.dataset.id;
+            document.getElementById('edit_nombre').value = row.children[1].textContent.trim();
+            document.getElementById('edit_abreviatura').value = row.children[2].textContent.trim();
+            document.getElementById('edit_tipo').value = row.children[3].textContent.trim().toLowerCase();
+            const esBase = row.children[4].textContent.trim() === 'Sí';
+            document.getElementById('edit_es_base').checked = esBase
+            document.getElementById('edit_es_base').value = esBase ? '1' : '0';
+            document.getElementById('editUnidadesForm').action = window.baseUrl + '/unidades_medida/' + id;
+            const modal = new bootstrap.Modal(document.getElementById('editUnidadesModal'));  
+            
+            modal.show();
+        });
+    }); */
+
+    document.querySelectorAll('.edit-unidades-btn').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const id = btn.dataset.id;
+            const nombre = btn.dataset.nombre;
+            const abreviatura = btn.dataset.abreviatura;
+            const tipo = btn.dataset.tipo;
+            const esBase = btn.dataset.es_base === "1";
+
+            // Debug: muestra si los campos existen
+            console.log(
+                document.getElementById('edit_unidad_id'),
+                document.getElementById('edit_nombre'),
+                document.getElementById('edit_abreviatura'),
+                document.getElementById('edit_tipo'),
+                document.getElementById('edit_es_base')
+            );
+
+            // Asignar valores
+            document.getElementById('editUnidadesForm').action = window.baseUrl + '/unidad_medida/' + id;
+            document.getElementById('edit_unidad_id').value = id;
+            document.getElementById('edit_nombre').value = nombre;
+            document.getElementById('edit_abreviatura').value = abreviatura;
+            document.getElementById('edit_tipo').value = tipo;
+            document.getElementById('edit_es_base').checked = esBase;
+
+            // Mostrar modal
+            const modal = new bootstrap.Modal(document.getElementById('editUnidadesModal'));
+            modal.show();
+        });
+    });
 
 
     // Mostrar modal de eliminar ingrediente
@@ -210,6 +273,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Mostrar modal de eliminar Unidad de Medida
+    document.querySelectorAll('.delete-unidades-btn').forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const id = btn.dataset.id;
+            const form = document.getElementById('deleteUnidadesForm');
+
+            // Solo asignamos la acción al form
+            form.action = window.baseUrl + '/unidad_medida/' + id;
+
+            // Abrir modal
+            const modal = new bootstrap.Modal(document.getElementById('deleteUnidadesModal'));
+            modal.show();
+        });
+    });
+
+
     // Acción al confirmar eliminación (puedes hacer submit de un formulario o AJAX)
     document.getElementById('confirmDeleteBtn')?.addEventListener('click', function () {
         const id = this.getAttribute('data-id');
@@ -249,6 +330,7 @@ document.addEventListener('DOMContentLoaded', function () {
         form.action = window.baseUrl + '/productos/' + id;
         form.submit();
     });
+ 
 
     // Mostrar modal de editar usuario con datos por AJAX
     $(document).on('click', '.edit-users-btn', function(e) {

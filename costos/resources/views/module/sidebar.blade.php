@@ -54,20 +54,68 @@
                     <i class="nav-icon bi bi-cake2"></i>
                     <p>Productos</p>
                     </a>
-                </li>{{-- 
-                <li class="nav-item">
-                    <a href="{{url('/costos') }}" class="nav-link">
+                </li> 
+              {{--  <li class="nav-item">
+                    <a href="{{url('/unidad_medidas') }}" class="nav-link">
                     <i class="nav-icon bi bi-cash"></i>
-                    <p>Costeo</p>
+                    <p>Unidades Medidas</p>
                     </a>
-                </li> --}}
-                {{-- <li class="nav-item">
-                    <a href="{{url('/ventas') }}" class="nav-link">
+                </li> 
+                <li class="nav-item">
+                    <a href="{{url('/conversion_unidades') }}" class="nav-link">
                     <i class="nav-icon bi bi-bar-chart"></i>
-                    <p>Ventas</p>
+                    <p>Conversion de Unidades</p>
                     </a>
-                </li> --}}
-                
+                </li>  --}}
+
+                <li class="nav-item menu-open">
+                    <a href="#" class="nav-link">
+                    <i class="nav-icon bi bi-ui-checks-grid"></i>
+                    <p>
+                        Conversiones Tools
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                    </p>
+                    </a>
+                    <ul class="nav nav-treeview" role="navigation" aria-label="Navigation 13" style="box-sizing: border-box; display: block;">
+                    <li class="nav-item">
+                        <a href="{{url('/unidad_medida') }}" class="nav-link">
+                        <i class="nav-icon bi bi-circle"></i>
+                        <p>Unidades Medidas</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url('/conversion_unidades') }}" class="nav-link">
+                        <i class="nav-icon bi bi-circle"></i>
+                        <p>Conversion de Unidades</p>
+                        </a>
+                    </li>
+                    </ul>
+                </li>
+                 <li class="nav-item menu-open">
+                    <a href="#" class="nav-link">
+                    <i class="nav-icon bi bi-table"></i>
+                    <p>
+                        Tabla Nutricional
+                        <i class="nav-arrow bi bi-chevron-right"></i>
+                        
+                    </p>
+                    </a>
+                    <ul class="nav nav-treeview" role="navigation" aria-label="Navigation 13" style="box-sizing: border-box; display: block;">
+                    <li class="nav-item">
+                        <a href="{{url('/ingredientes_nutricion') }}" class="nav-link">
+                        <i class="nav-icon bi bi-circle"></i>
+                        <p>Ingredientes Nutricion</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{url('/producto_nutricion') }}" class="nav-link">
+                        <i class="nav-icon bi bi-circle"></i>
+                        <p>Producto Nutricion</p>
+                        </a>
+                    </li>
+                    </ul>
+                </li>
+                                 
                 <li class="nav-item">
                     <a href="{{url('/usuarios') }}" class="nav-link">
                     <i class="nav-icon bi bi-person"></i>

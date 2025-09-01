@@ -11,6 +11,13 @@ class UnidadMedida extends Model
 
     protected $table = 'unidades_medida';
     protected $fillable = ['nombre', 'abreviatura', 'tipo', 'es_base'];
+    
+    public $timestamps = true;
+    protected $dateFormat = 'Y-m-d H:i:s';
+    protected $casts = [
+        'fecha_actualizacion' => 'datetime',
+    ];
+    protected $hidden = ['created_at', 'updated_at'];   
 
     public function ingredientes()
     {
@@ -21,4 +28,6 @@ class UnidadMedida extends Model
     {
         return $this->hasMany(ConversionUnidad::class, 'unidad_id');
     }
+
+
 }
